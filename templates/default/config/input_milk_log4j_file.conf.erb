@@ -1,0 +1,41 @@
+input {
+  file {
+    path => ["<%= @input_milk_log4j_path %>"]
+#  stdin {
+    codec => multiline {
+      pattern => "^%{TIMESTAMP_ISO8601} "
+      negate => true
+      what => previous
+    }
+  }
+}
+
+filter {
+  grok {
+    match => ["message", "%{TIMESTAMP_ISO8601:timestamp}%{SPACE}%{LOGLEVEL:loglevel}%{SPACE}%{DATA:category}%{SPACE}%{PARENTHESESSTRING:task}%{SPACE}%{GREEDYDATA:remained}"]
+    add_tag => "log4j"
+  #  overwrite => ["message"]
+  #  remove_field => ["message"]
+  }
+
+  csv {
+    tags => ["log4j"]
+    source => "remained"
+    separator => "|"
+    quote_char => "'"
+    columns => ["column01","column02","column03","column04","column05","column06","column07","column08","column09","column10","column11","column12","column13","column14","column15"]
+  }
+
+  date {
+   match => ["timestamp", "yyyy-MM-dd HH:mm:ss,SSS"]
+  }
+
+  #multiline {
+  #  tags => ["_grokparsefailure"]
+  #  pattern => ".*"
+  #  negate => true
+  #  what => "previous"
+  #  add_tag => "notgrok"
+  #}
+
+}
