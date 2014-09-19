@@ -1,0 +1,9 @@
+output {
+    redis {
+            host => '<%= @output_redis_host %>'
+            port => <%= @output_redis_port %>
+            data_type => 'list'
+            key => '<%= @output_redis_key %>'
+            codec => 'json'
+        }
+}
