@@ -1,6 +1,6 @@
 input {
   file {
-    path => ["<%= node[:logstash][:instance][:agent][:input_path] %>"]
+    path => ["<%= node[:logstash][:instance][:agent][:config_templates_variables][:input_path] %>"]
     codec => multiline {
       pattern => "^%{TIMESTAMP_ISO8601} "
       negate => true
