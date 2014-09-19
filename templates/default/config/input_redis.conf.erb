@@ -1,9 +1,9 @@
 input {
     redis {
-            host => '<%= @input_redis_host %>'
-            port => <%= @input_redis_port %>
+            host => '<%= node[:logstash][:instance][:agent][:config_templates_variables][:input_redis_host] %>'
+            port => <%= node[:logstash][:instance][:agent][:config_templates_variables][:input_redis_port] %>
             data_type => 'list'
-            key => '<%= @input_redis_key %>'
+            key => '<%= node[:logstash][:instance][:agent][:config_templates_variables][:input_redis_key] %>'
             codec => 'json'
         }
 }
