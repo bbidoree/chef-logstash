@@ -1,7 +1,6 @@
 input {
   file {
-    path => ["<%= @input_milk_log4j_path %>"]
-#  stdin {
+    path => ["<%= node[:logstash][:instance][:agent][:input_path] %>"]
     codec => multiline {
       pattern => "^%{TIMESTAMP_ISO8601} "
       negate => true
