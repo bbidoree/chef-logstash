@@ -11,7 +11,7 @@ input {
 
 filter {
   grok {
-    match => ["message", "%{TIMESTAMP_ISO8601:timestamp}%{SPACE}%{LOGLEVEL:loglevel}%{SPACE}%{DATA:category}%{SPACE}%{PARENTHESESSTRING:task}%{SPACE}%{GREEDYDATA:remained}"]
+    match => ["message", "%{TIMESTAMP_ISO8601:timestamp}%{SPACE}%{LOGLEVEL:loglevel}%{SPACE}%{BRACKETSSTRING:category}%{SPACE}%{PARENTHESESSTRING:task}%{SPACE}%{GREEDYDATA:remained}"]
     add_tag => "log4j"
   #  overwrite => ["message"]
   #  remove_field => ["message"]
