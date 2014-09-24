@@ -16,7 +16,7 @@ end
 
 # services are hard! Let's go LWRP'ing.   FIREBALL! FIREBALL! FIREBALL!
 logstash_service name do
-  action      [:enable, :start]
+  action      [:enable]
 end
 
 logstash_config name do
