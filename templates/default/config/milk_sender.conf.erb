@@ -1,0 +1,45 @@
+
+input {
+	file {
+		type => "serverLog"
+		path => "/mnt/share/server*"
+		start_position => "beginning"
+		codec => multiline {
+			pattern => "^%{TIMESTAMP_ISO8601} "
+			negate => true
+			what => previous
+			}
+	}
+
+	file {
+		type => "sgmpLog"
+		path => "/mnt/share/sgmp*"
+		start_position => "beginning"
+		codec => multiline {
+			pattern => "^\["
+			negate => true
+			what => previous
+			}
+	}
+
+#	stdin {
+#		type => "serverLog"
+#		codec => multiline {
+#			pattern => "^%{TIMESTAMP_ISO8601} "
+#			negate => true
+#			what => previous
+#			}
+#	}
+
+}
+
+output {
+	redis {
+		host => 'localhost'
+		port => 6379
+		data_type => 'list'
+		key => 'milkLog'
+		codec => 'json'
+	}
+}
+
