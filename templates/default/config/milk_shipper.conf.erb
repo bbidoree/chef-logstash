@@ -1,0 +1,91 @@
+input {
+	redis {
+		host => 'localhost'
+		port => 6379
+		data_type => 'list'
+		key => 'milkLog'
+		codec => 'json'
+		add_field => ["analysisVer", 0]
+	}
+
+}
+
+
+filter {
+
+		##############################
+		# in case of server log.     #
+		##############################
+
+	if [type] == "serverLog"{
+		
+		grok {
+			match => ["message", "(?m)%{TIMESTAMP_ISO8601:timestamp}%{SPACE}%{LOGLEVEL:loglevel}%{SPACE}\[%{DATA:category}\]%{SPACE}\(%{DATA:task}\)%{SPACE}%{GREEDYDATA:remained}"]
+		}
+		
+		if [category] == "_TRACE_LOGGER"{
+			grok {
+				match => ["remained", "(?m)%{WORD:logType}▶◀%{GREEDYDATA:remained}"]
+				overwrite => [ "remained" ]
+			}
+
+			if [logType] == "RES" {
+
+				grok {
+					match => ["remained", "(?m)%{DATA:apiTranId}▶◀%{DATA:WsSessionId}▶◀%{DATA:userId}▶◀%{DATA:apiPath}▶◀%{DATA:deviceId}▶◀%{DATA:clientIp}▶◀%{DATA:params}▶◀%{DATA:headers}▶◀%{DATA:postBody}▶◀%{DATA:resultCode}▶◀%{DATA:responseTime}▶◀%{DATA:shopId}▶◀%{DATA:fullUrl}▶◀%{DATA:extMsg}▶◀%{GREEDYDATA:remained}"]
+					overwrite => [ "remained" ]
+				}
+
+			}
+			else if [logType] == "REQ" {
+				grok {
+					match => ["remained", "(?m)%{DATA:apiTranId}▶◀%{DATA:WsSessionId}▶◀%{DATA:userId}▶◀%{DATA:apiPath}▶◀%{DATA:shopId}▶◀%{DATA:fullUrl}▶◀%{DATA:extMsg}▶◀%{GREEDYDATA:remained}"]
+					overwrite => [ "remained" ]
+				}
+			}
+		}
+
+		date {
+			match => ["timestamp", "yyyy-MM-dd HH:mm:ss,SSS"]
+		}
+
+	}
+
+
+		##############################
+		# in case of server log.     #
+		##############################
+
+	if [type] == "sgmpLog"{
+		
+		grok {
+			match => ["message", "(?m)\[%{DATA:timestamp}\]::%{DATA:category}::%{DATA:typeMsg}::%{INT:loglevel}::%{DATA:sgmpCode}::%{GREEDYDATA:remained}"]
+		}
+
+
+		date {
+			match => ["timestamp", "yyyyMMdd HH:mm:ss.SSS"]
+		}
+
+	}
+
+	milkLogAnalysisFilter {
+		message => "TEST"
+	}
+
+	# if dangerVal is -11(NEED_DELETE) then call drop.
+	if [dangerVal] == -11 {
+		drop{}
+	}
+
+}
+
+
+
+output {
+	elasticsearch { 
+		host => localhost 
+		protocol => "http"	# important!! for use kibana 4.
+	}
+#	stdout { codec => rubydebug }
+}
