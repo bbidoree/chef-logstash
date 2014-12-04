@@ -80,7 +80,7 @@ bash "gem" do
   user "root"
   code <<-EOH
     gem install elasticsearch
-    gem install hashie    wget     #{jboss_get_url}
+    gem install hashie
   EOH
 end
 
