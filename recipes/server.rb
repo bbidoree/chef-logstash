@@ -59,7 +59,7 @@ end
 #  action [:create]
 #end
 
-template '/filters/milkLogAnalysisFilter.rb' do
+template '/lib/logstash/filters/milkLogAnalysisFilter.rb' do
   tp = source '/filters/milkLogAnalysisFilter.rb.erb'
   owner 'root'
   group 'root'
