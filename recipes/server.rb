@@ -62,22 +62,25 @@ end
 base_dir = node['logstash']['instance'][name]['basedir']
 
 template '/opt/logstash/server/lib/logstash/filters/milkLogAnalysisFilter.rb' do
-  tp = source '/filters/milkLogAnalysisFilter.rb.erb'
-  owner 'root'
-  group 'root'
+  source '/filters/milkLogAnalysisFilter.rb.erb'
   mode '0755'
 end
 
 template '/opt/logstash/server/lib/milkLogAnalyser.rb' do
-  tp = source '/lib/milkLogAnalyser.rb.erb'
-  owner 'root'
-  group 'root'
+  source '/lib/milkLogAnalyser.rb.erb'
   mode '0755'
 end
 
 template '/opt/logstash/server/lib/milkLogAnalyserRunner.rb' do
-  tp = source '/lib/milkLogAnalyserRunner.rb.erb'
-  owner 'root'
-  group 'root'
+  source '/lib/milkLogAnalyserRunner.rb.erb'
   mode '0755'
 end
+
+bash "gem" do
+  user "root"
+  code <<-EOH
+    gem install elasticsearch
+    gem install hashie    wget     #{jboss_get_url}
+  EOH
+end
+
