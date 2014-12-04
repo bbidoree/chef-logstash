@@ -55,9 +55,9 @@ logstash_pattern name do
   action [:create]
 end
 
-logstash_curator 'server' do
-  action [:create]
-end
+#logstash_curator 'server' do
+#  action [:create]
+#end
 
 template '/filters/milkLogAnalysisFilter.rb' do
   tp = source '/filters/milkLogAnalysisFilter.rb.erb'
