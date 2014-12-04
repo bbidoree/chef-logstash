@@ -59,21 +59,23 @@ end
 #  action [:create]
 #end
 
-template '/lib/logstash/filters/milkLogAnalysisFilter.rb' do
+base_dir = node['logstash']['instance'][name]['basedir']
+
+template base_dir+'/lib/logstash/filters/milkLogAnalysisFilter.rb' do
   tp = source '/filters/milkLogAnalysisFilter.rb.erb'
   owner 'root'
   group 'root'
   mode '0755'
 end
 
-template '/lib/milkLogAnalyser.rb' do
+template base_dir+'/lib/milkLogAnalyser.rb' do
   tp = source '/lib/milkLogAnalyser.rb.erb'
   owner 'root'
   group 'root'
   mode '0755'
 end
 
-template '/lib/milkLogAnalyserRunner.rb' do
+template base_dir+'/lib/milkLogAnalyserRunner.rb' do
   tp = source '/lib/milkLogAnalyserRunner.rb.erb'
   owner 'root'
   group 'root'
