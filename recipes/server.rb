@@ -58,3 +58,24 @@ end
 logstash_curator 'server' do
   action [:create]
 end
+
+template '/filters/milkLogAnalysisFilter.rb' do
+  tp = source '/filters/milkLogAnalysisFilter.rb.erb'
+  owner 'root'
+  group 'root'
+  mode '0755'
+end
+
+template '/lib/milkLogAnalyser.rb' do
+  tp = source '/lib/milkLogAnalyser.rb.erb'
+  owner 'root'
+  group 'root'
+  mode '0755'
+end
+
+template '/lib/milkLogAnalyserRunner.rb' do
+  tp = source '/lib/milkLogAnalyserRunner.rb.erb'
+  owner 'root'
+  group 'root'
+  mode '0755'
+end
