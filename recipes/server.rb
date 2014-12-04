@@ -59,7 +59,7 @@ end
 #  action [:create]
 #end
 
-base_dir = node['logstash']['instance'][name]['basedir']
+base_dir = node['logstash']['instance'][name]['basedir'] + "/name"
 
 template '#{base_dir}/lib/logstash/filters/milkLogAnalysisFilter.rb' do
   tp = source '/filters/milkLogAnalysisFilter.rb.erb'
