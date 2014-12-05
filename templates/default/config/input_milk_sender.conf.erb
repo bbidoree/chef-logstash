@@ -2,7 +2,7 @@
 input {
 	file {
 		type => "serverLog"
-		path => "/opt/wildfly/standalon/log/server*"
+		path => "/opt/wildfly/standalone/log/server*"
 		start_position => "beginning"
 		codec => multiline {
 			pattern => "^%{TIMESTAMP_ISO8601} "
@@ -13,7 +13,7 @@ input {
 
 	file {
 		type => "sgmpLog"
-		path => "/opt/wildfly/standalon/log/sgmp/sgmp*"
+		path => "/opt/wildfly/standalone/log/sgmp/sgmp*"
 		start_position => "beginning"
 		codec => multiline {
 			pattern => "^\["
