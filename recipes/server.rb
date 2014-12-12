@@ -63,17 +63,17 @@ base_dir = node['logstash']['instance'][name]['basedir']
 
 template '/opt/logstash/server/lib/logstash/filters/milkLogAnalysisFilter.rb' do
   source '/filters/milkLogAnalysisFilter.rb.erb'
-  mode '0755'
+  mode '0664'
 end
 
 template '/opt/logstash/server/lib/milkLogAnalyser.rb' do
   source '/lib/milkLogAnalyser.rb.erb'
-  mode '0755'
+  mode '0664'
 end
 
 template '/opt/logstash/server/lib/milkLogAnalyserRunner.rb' do
   source '/lib/milkLogAnalyserRunner.rb.erb'
-  mode '0755'
+  mode '0664'
 end
 
 bash "gem" do
