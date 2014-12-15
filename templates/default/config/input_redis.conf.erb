@@ -1,9 +1,9 @@
 input {
     redis {
-            host => '<%= node[:logstash][:instance][:agent][:config_templates_variables][:input_redis_host] %>'
-            port => <%= node[:logstash][:instance][:agent][:config_templates_variables][:input_redis_port] %>
+            host => '<%= node[:logstash][:instance][:server][:config_templates_variables][:input_redis_host] %>'
+            port => <%= node[:logstash][:instance][:server][:config_templates_variables][:input_redis_port] %>
             data_type => 'list'
-            key => '<%= node[:logstash][:instance][:agent][:config_templates_variables][:input_redis_key] %>'
+            key => '<%= node[:logstash][:instance][:server][:config_templates_variables][:input_redis_key] %>'
             codec => 'json'
             add_field => ["analysisVer", 0]
         }
