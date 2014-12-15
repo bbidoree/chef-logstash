@@ -40,7 +40,7 @@ logstash_config name do
   templates my_templates
   action [:create]
   variables(
-    elasticsearch_embedded: true
+    elasticsearch_protocol: "http"
   )
   notifies :restart, "logstash_service[#{name}]"
 end
@@ -63,16 +63,22 @@ base_dir = node['logstash']['instance'][name]['basedir']
 
 template '/opt/logstash/server/lib/logstash/filters/milkLogAnalysisFilter.rb' do
   source '/filters/milkLogAnalysisFilter.rb.erb'
+  owner  node['logstash']['instance'][name]['user']
+  group  node['logstash']['instance'][name]['group']
   mode '0664'
 end
 
 template '/opt/logstash/server/lib/milkLogAnalyser.rb' do
   source '/lib/milkLogAnalyser.rb.erb'
+  owner  node['logstash']['instance'][name]['user']
+  group  node['logstash']['instance'][name]['group']
   mode '0664'
 end
 
 template '/opt/logstash/server/lib/milkLogAnalyserRunner.rb' do
   source '/lib/milkLogAnalyserRunner.rb.erb'
+  owner  node['logstash']['instance'][name]['user']
+  group  node['logstash']['instance'][name]['group']
   mode '0664'
 end
 
