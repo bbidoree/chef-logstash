@@ -61,21 +61,24 @@ end
 
 base_dir = node['logstash']['instance'][name]['basedir']
 
-template '/opt/logstash/server/lib/logstash/filters/milkLogAnalysisFilter.rb' do
+template 'milkLogAnalysisFilter.rb' do
+  path   "#{base_dir}/#{name}/lib/logstash/filters/milkLogAnalysisFilter.rb"
   source '/filters/milkLogAnalysisFilter.rb.erb'
   owner  node['logstash']['instance'][name]['user']
   group  node['logstash']['instance'][name]['group']
   mode '0664'
 end
 
-template '/opt/logstash/server/lib/milkLogAnalyser.rb' do
+template 'milkLogAnalyser.rb' do
+  path   "#{base_dir}/#{name}/lib/milkLogAnalyser.rb"
   source '/lib/milkLogAnalyser.rb.erb'
   owner  node['logstash']['instance'][name]['user']
   group  node['logstash']['instance'][name]['group']
   mode '0664'
 end
 
-template '/opt/logstash/server/lib/milkLogAnalyserRunner.rb' do
+template 'milkLogAnalyserRunner.rb' do
+  path   "#{base_dir}/#{name}/lib/milkLogAnalyserRunner.rb"
   source '/lib/milkLogAnalyserRunner.rb.erb'
   owner  node['logstash']['instance'][name]['user']
   group  node['logstash']['instance'][name]['group']
