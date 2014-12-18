@@ -60,6 +60,9 @@ end
 #end
 
 base_dir = node['logstash']['instance'][name]['basedir']
+if base_dir.nil?
+  base_dir = node['logstash']['instance']['default']['basedir']
+end
 
 template 'milkLogAnalysisFilter.rb' do
   path   "#{base_dir}/#{name}/lib/logstash/filters/milkLogAnalysisFilter.rb"
